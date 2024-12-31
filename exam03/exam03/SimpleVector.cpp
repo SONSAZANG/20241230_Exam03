@@ -117,10 +117,10 @@ public:
 	/// <param name="isUpper"></param>
 	void sortData(bool isUpper) {
 		if (isUpper) {
-			sort(data, data + currentSize, less<>());
+			sort(data, data + currentSize, greater<>());
 		}
 		else {
-			sort(data, data + currentSize, greater<>());
+			sort(data, data + currentSize, less<>());
 		}
 
 		cout << "배열의 데이터가 " << (isUpper ? "오름차순" : "내림차순") << "으로 정렬되었습니다." << endl;
@@ -137,36 +137,74 @@ public:
 	}
 };
 
-int main() {
+void simpleVectorProgram() {
+	cout << "SimpleVector 프로그램" << endl;
+	cout << "배열을 생성하려고 합니다. 배열의 크기를 입력하세요: ";
 	int size = 0;
-	cout << "생성하려는 배열의 값을 입력하세요." << endl;
 	cin >> size;
+
 	auto sv = SimpleVector<int>(size);
+	cout << "크기 " << size << "를 가진 배열이 생성되었습니다." << endl;
+	sv.printValue();
 
-	int value = 0;
-	for (int i = 0; i < size; ++i) {
-		cin >> value;
-		sv.push_back(value);
+	bool isFinish = false;
+	while (isFinish == false) {
+		int num = 0;
+		cout << "원하시는 기능을 입력하세요. \n 1->크기 변경, 2->값 추가, 3->값 제거, 4->내림차순 정렬, 5->오름차순 정렬, 6->값출력 9->종료" << endl;;
+		cin >> num;
+		switch (num)
+		{
+		case 1:
+		{
+			int changeValue = 0;
+			cout << "변경할 크기를 입력하세요" << endl;
+			cin >> changeValue;
+			sv.resize(changeValue);
+			break;
+		}
+		case 2:
+		{
+			int appendValue = 0;
+			cout << "추가 할 값을 입력하세요." << endl;
+			cin >> appendValue;
+			sv.push_back(appendValue);
+			sv.printValue();
+			break;
+		}
+		case 3:
+		{
+			sv.pop();
+			sv.printValue();
+			break;
+		}
+		case 4:
+		{
+			sv.sortData(true);
+			sv.printValue();
+			break;
+		}
+		case 5:
+		{
+			sv.sortData(false);
+			sv.printValue();
+			break;
+		}
+		case 6:
+		{
+			cout << "배열의 데이터를 출력합니다" << endl;
+			sv.printValue();
+			break;
+		}
+		case 9:
+			isFinish = true;
+			break;
+		default:
+			break;
+		}
 	}
-	cout << endl;
+	cout << "프로그램 종료" << endl;
+}
 
-	sv.printValue();
-
-	cout << sv.capacity() << endl;
-
-	sv.resize(10);
-
-	cout << sv.capacity() << endl;
-
-	sv.printValue();
-
-	sv.sortData(false);
-
-	sv.printValue();
-
-	sv.sortData(true);
-
-	sv.printValue();
-
-	return 0;
+int main() {
+	simpleVectorProgram();
 }
