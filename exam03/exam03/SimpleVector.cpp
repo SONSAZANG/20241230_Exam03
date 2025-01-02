@@ -37,6 +37,7 @@ public:
 
 	~SimpleVector() {
 		delete[] data;
+		cout << "SimpleVector 소멸되었습니다." << endl;
 	}
 
 	/// <summary>
@@ -123,7 +124,7 @@ public:
 			sort(data, data + currentSize, less<>());
 		}
 
-		cout << "배열의 데이터가 " << (isUpper ? "오름차순" : "내림차순") << "으로 정렬되었습니다." << endl;
+		cout << "배열의 데이터가 " << (isUpper ? "내림차순" : "오름차순") << "으로 정렬되었습니다." << endl;
 	}
 
 	/// <summary>
@@ -137,8 +138,20 @@ public:
 	}
 };
 
+enum FUNCTION {
+	CHANGE_SIZE = 1,
+	PUSH_VALUE,
+	POP_VALUE,
+	DESCENDING_SORT,
+	ASSCENDING_SORT,
+	PRINT_VALUE,
+	EXIT = 9,
+};
+
 void simpleVectorProgram() {
+	cout << "---------------------------------------------" << endl;
 	cout << "SimpleVector 프로그램" << endl;
+	cout << "---------------------------------------------" << endl;
 	cout << "배열을 생성하려고 합니다. 배열의 크기를 입력하세요: ";
 	int size = 0;
 	cin >> size;
@@ -148,13 +161,17 @@ void simpleVectorProgram() {
 	sv.printValue();
 
 	bool isFinish = false;
+	int num = 0;
 	while (isFinish == false) {
-		int num = 0;
-		cout << "원하시는 기능을 입력하세요. \n 1->크기 변경, 2->값 추가, 3->값 제거, 4->내림차순 정렬, 5->오름차순 정렬, 6->값출력 9->종료" << endl;;
+		cout << "---------------------------------------------" << endl;
+		cout << "원하시는 기능을 입력하세요. \n1. 크기 변경 \n2. 값 추가 \n3. 값 제거 \n4. 내림차순 정렬 \n5. 오름차순 정렬 \n6. 값출력 \n9. 종료" << endl;
+		cout << "---------------------------------------------" << endl;
+
 		cin >> num;
-		switch (num)
+
+		switch ((FUNCTION)num)
 		{
-		case 1:
+		case CHANGE_SIZE:
 		{
 			int changeValue = 0;
 			cout << "변경할 크기를 입력하세요" << endl;
@@ -162,7 +179,7 @@ void simpleVectorProgram() {
 			sv.resize(changeValue);
 			break;
 		}
-		case 2:
+		case PUSH_VALUE:
 		{
 			int appendValue = 0;
 			cout << "추가 할 값을 입력하세요." << endl;
@@ -171,31 +188,31 @@ void simpleVectorProgram() {
 			sv.printValue();
 			break;
 		}
-		case 3:
+		case POP_VALUE:
 		{
 			sv.pop();
 			sv.printValue();
 			break;
 		}
-		case 4:
+		case DESCENDING_SORT:
 		{
 			sv.sortData(true);
 			sv.printValue();
 			break;
 		}
-		case 5:
+		case ASSCENDING_SORT:
 		{
 			sv.sortData(false);
 			sv.printValue();
 			break;
 		}
-		case 6:
+		case PRINT_VALUE:
 		{
 			cout << "배열의 데이터를 출력합니다" << endl;
 			sv.printValue();
 			break;
 		}
-		case 9:
+		case EXIT:
 			isFinish = true;
 			break;
 		default:
